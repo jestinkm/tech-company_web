@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Admin Login</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav>
+    <div class="logo">TechCorp</div>
+    <div>
+      <a href="index.html">Home</a>
+      <a href="index.html#about">About</a>
+      <a href="login.html">Login</a>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <div class="hero">
+    <h1>Admin Login</h1>
+    <p>Secure access to the admin panel</p>
+    <div class="hero-icons">
+      <div class="hero-icon"><i class="fas fa-shield-alt"></i></div>
+      <div class="hero-icon"><i class="fas fa-lock"></i></div>
+      <div class="hero-icon"><i class="fas fa-user-shield"></i></div>
+    </div>
+  </div>
+
+  <div class="container">
+    <h2>Login</h2>
+
+    <form id="loginForm">
+      <div class="form-group">
+        <label for="username">Username</label>
+        <input type="text" id="username" placeholder="Enter username" required>
+        <span class="icon"><i class="fas fa-user"></i></span>
+      </div>
+
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" id="password" placeholder="Enter password" required>
+        <span class="icon"><i class="fas fa-key"></i></span>
+      </div>
+
+      <button type="submit">Login <i class="fas fa-sign-in-alt"></i></button>
+    </form>
+
+    <p id="status"></p>
+  </div>
+
+  <footer>
+    <p>&copy; 2024 TechCorp. All rights reserved.</p>
+    <div class="social-links">
+      <a href="#"><i class="fab fa-twitter"></i></a>
+      <a href="#"><i class="fab fa-linkedin"></i></a>
+      <a href="#"><i class="fab fa-facebook"></i></a>
+      <a href="#"><i class="fab fa-instagram"></i></a>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById("loginForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const data = {
+        username: document.getElementById("username").value,
+        password: document.getElementById("password").value,
+      };
+
+      const res = await fetch("/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+
+      const result = await res.json();
+      const statusEl = document.getElementById("status");
+      
+      if (res.ok) {
+        statusEl.innerText = "Login successful! Redirecting...";
+        statusEl.className = "success";
+        localStorage.setItem("token", result.token);
+        setTimeout(() => {
+          window.location.href = "admin.html";
+        }, 1500);
+      } else {
+        statusEl.innerText = result.message || "Login failed";
+        statusEl.className = "error";
+      }
+    });
+  </script>
+
+</body>
+</html>

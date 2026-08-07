@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Admin Panel</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav>
+    <div class="logo">TechCorp Admin</div>
+    <div>
+      <a href="index.html">Home</a>
+      <a href="index.html#about">About</a>
+      <a href="login.html">Login</a>
+    </div>
+  </nav>
+
+  <div class="admin-container">
+    <div class="admin-header">
+      <h2>Contact Messages</h2>
+      <div class="admin-actions">
+        <button class="refresh-btn" onclick="loadContacts()"><i class="fas fa-sync-alt"></i> Refresh</button>
+        <button class="logout-btn" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</button>
+      </div>
+    </div>
+
+    <table id="contactTable">
+      <thead>
+        <tr>
+          <th><i class="fas fa-user"></i> Name</th>
+          <th><i class="fas fa-envelope"></i> Email</th>
+          <th><i class="fas fa-comment"></i> Message</th>
+          <th><i class="fas fa-calendar"></i> Date</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
+
+  <footer>
+    <p>&copy; 2024 TechCorp Admin Panel. All rights reserved.</p>
+  </footer>
+
+  <script>
+  // Check authentication
+  function checkAuth() {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      window.location.href = "login.html";
+      return false;
+    }
+    return true;
+  }
+
+  // Logout function
+  function logout() {
+    localStorage.removeItem("token");
+    window.location.href = "login.html";
+  }
+
+  async function loadContacts() {
+    if (!checkAuth()) return;
+
+    try {
+      const token = localStorage.getItem("token");
+      const response = await fetch("/contacts", {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
+
+      if (response.status === 401 || response.status === 403) {
+        logout();
+        return;
+      }
+
+      const contacts = await response.json();
+
+      const tbody = document.querySelector("#contactTable tbody");
+      tbody.innerHTML = "";
+
+      if (contacts.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="4" class="empty-state"><i class="fas fa-inbox"></i> No messages yet</td></tr>';
+        return;
+      }
+
+      contacts.forEach((contact, index) => {
+        const row = document.createElement('tr');
+        row.style.animationDelay = `${index * 0.1}s`;
+        row.style.animation = 'tableRowFade 0.5s ease-out';
+        row.innerHTML = `
+          <td><strong>${contact.name}</strong></td>
+          <td>${contact.email}</td>
+          <td>${contact.message}</td>
+          <td>${new Date(contact.createdAt).toLocaleString()}</td>
+        `;
+        tbody.appendChild(row);
+      });
+    } catch (err) {
+      console.error(err);
+      if (err.message.includes('401') || err.message.includes('403')) {
+        logout();
+      }
+    }
+  }
+
+  loadContacts();
+  </script>
+
+</body>
+</html>

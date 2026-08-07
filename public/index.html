@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Contact Form</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav>
+    <div class="logo">TechCorp</div>
+    <div>
+      <a href="index.html">Home</a>
+      <a href="#about">About</a>
+      <a href="#contact">Contact</a>
+      <a href="login.html">Login</a>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <div class="hero">
+    <h1>Get In Touch</h1>
+    <p>We'd love to hear from you. Send us a message and we'll respond as soon as possible.</p>
+    <div class="hero-icons">
+      <div class="hero-icon"><i class="fas fa-envelope"></i></div>
+      <div class="hero-icon"><i class="fas fa-phone"></i></div>
+      <div class="hero-icon"><i class="fas fa-map-marker-alt"></i></div>
+    </div>
+  </div>
+
+  <!-- About Section -->
+  <div class="about-section">
+    <div class="container about-container">
+      <h2>About TechCorp</h2>
+      <div class="about-content">
+        <div class="about-text">
+          <h3>Our Mission</h3>
+          <p>At TechCorp, we're dedicated to delivering innovative technology solutions that transform businesses and improve lives. Our team of experts combines cutting-edge technology with creative thinking to solve complex challenges.</p>
+          
+          <h3>What We Do</h3>
+          <p>We specialize in web development, mobile applications, cloud solutions, and digital transformation. Our commitment to excellence and customer satisfaction drives everything we do.</p>
+          
+          <h3>Our Values</h3>
+          <ul class="values-list">
+            <li><i class="fas fa-check-circle"></i> Innovation and creativity</li>
+            <li><i class="fas fa-check-circle"></i> Customer-centric approach</li>
+            <li><i class="fas fa-check-circle"></i> Integrity and transparency</li>
+            <li><i class="fas fa-check-circle"></i> Continuous improvement</li>
+          </ul>
+        </div>
+        
+        <div class="about-stats">
+          <div class="stat-card">
+            <div class="stat-number">500+</div>
+            <div class="stat-label">Projects Completed</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number">150+</div>
+            <div class="stat-label">Happy Clients</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number">10+</div>
+            <div class="stat-label">Years Experience</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number">50+</div>
+            <div class="stat-label">Team Members</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container" id="contact">
+    <h2>Contact Us</h2>
+
+    <form id="contactForm">
+      <div class="form-group">
+        <label for="name">Name</label>
+        <input type="text" id="name" placeholder="Enter your name" required>
+        <span class="icon"><i class="fas fa-user"></i></span>
+      </div>
+
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" id="email" placeholder="Enter your email" required>
+        <span class="icon"><i class="fas fa-envelope"></i></span>
+      </div>
+
+      <div class="form-group textarea-group">
+        <label for="message">Message</label>
+        <textarea id="message" placeholder="Enter your message" required></textarea>
+        <span class="icon"><i class="fas fa-comment"></i></span>
+      </div>
+
+      <button type="submit">Send Message <i class="fas fa-paper-plane"></i></button>
+    </form>
+
+    <p id="status"></p>
+  </div>
+
+  <footer>
+    <p>&copy; 2024 TechCorp. All rights reserved.</p>
+    <div class="social-links">
+      <a href="#"><i class="fab fa-twitter"></i></a>
+      <a href="#"><i class="fab fa-linkedin"></i></a>
+      <a href="#"><i class="fab fa-facebook"></i></a>
+      <a href="#"><i class="fab fa-instagram"></i></a>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById("contactForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const data = {
+        name: document.getElementById("name").value,
+        email: document.getElementById("email").value,
+        message: document.getElementById("message").value,
+      };
+
+      const res = await fetch("/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+
+      const result = await res.json();
+      const statusEl = document.getElementById("status");
+      statusEl.innerText = result.message;
+      statusEl.className = res.ok ? "success" : "error";
+      document.getElementById("contactForm").reset();
+    });
+  </script>
+
+</body>
+</html>
