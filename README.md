@@ -1,30 +1,52 @@
-# Contact Form with MongoDB & Admin Authentication
+<div align="center">
 
-A simple full-stack web application built using **Node.js, Express.js, and MongoDB**. Users can submit contact messages through a contact form, and an authenticated admin can securely log in and view all submitted messages through a protected dashboard.
+# 🚀 Contact Form with MongoDB & Admin Authentication
 
-## Features
+### A Full-Stack Contact Management Web Application
 
-- Contact form submission
-- MongoDB database integration
-- Admin login authentication
-- Protected admin dashboard
-- View all contact messages
-- Image, PDF, and file upload support
-- Responsive web interface
+<p>
+  <img src="https://img.shields.io/badge/Node.js-Backend-green?style=for-the-badge&logo=node.js"/>
+  <img src="https://img.shields.io/badge/Express.js-Server-black?style=for-the-badge&logo=express"/>
+  <img src="https://img.shields.io/badge/MongoDB-Database-green?style=for-the-badge&logo=mongodb"/>
+  <img src="https://img.shields.io/badge/JWT-Authentication-blue?style=for-the-badge&logo=jsonwebtokens"/>
+</p>
 
-## Tech Stack
+A modern **Node.js + Express + MongoDB** application that allows users to submit contact messages and enables authenticated administrators to securely manage and view all submissions through a protected dashboard.
 
-- HTML
-- CSS
-- JavaScript
-- Node.js
-- Express.js
-- MongoDB
-- Mongoose
-- JWT Authentication
-- Multer (File Upload)
+</div>
 
-## Project Structure
+---
+
+## ✨ Features
+
+- 📝 Contact form submission
+- 🔐 Secure admin login authentication
+- 🛡️ Protected admin dashboard
+- 📂 MongoDB database integration
+- 📸 Image, PDF, and file upload support
+- 📊 View all submitted messages
+- ⚡ REST API with Express.js
+- 📱 Responsive web interface
+
+---
+
+## 🛠️ Tech Stack
+
+| Technology | Purpose |
+|------------|---------|
+| **HTML** | Frontend Structure |
+| **CSS** | Styling |
+| **JavaScript** | Client-side Logic |
+| **Node.js** | Backend Runtime |
+| **Express.js** | Web Framework |
+| **MongoDB** | Database |
+| **Mongoose** | MongoDB ODM |
+| **JWT** | Authentication |
+| **Multer** | File Upload |
+
+---
+
+## 📁 Project Structure
 
 ```text
 tech-company_web/
@@ -46,22 +68,26 @@ tech-company_web/
 └── README.md
 ```
 
-## Installation
+---
 
-Clone the repository:
+## ⚙️ Installation
+
+### 1️⃣ Clone the Repository
 
 ```bash
 git clone https://github.com/jestinkm/tech-company_web.git
 cd tech-company_web
 ```
 
-Install dependencies:
+### 2️⃣ Install Dependencies
 
 ```bash
 npm install
 ```
 
-Create a `.env` file:
+### 3️⃣ Configure Environment Variables
+
+Create a `.env` file in the root directory:
 
 ```env
 MONGO_URI=mongodb://127.0.0.1:27017/contactDB
@@ -69,7 +95,17 @@ PORT=5000
 JWT_SECRET=your_secret_key
 ```
 
-## Run the Project
+For MongoDB Atlas:
+
+```env
+MONGO_URI=mongodb+srv://<username>:<password>@cluster.mongodb.net/contactDB
+PORT=5000
+JWT_SECRET=your_secret_key
+```
+
+---
+
+## ▶️ Run the Application
 
 Start the server:
 
@@ -77,17 +113,19 @@ Start the server:
 node server.js
 ```
 
-Open your browser:
+Open in your browser:
 
 ```
 http://localhost:5000
 ```
 
-## Authentication
+---
 
-Admins must log in before accessing the dashboard.
+## 🔐 Authentication
 
-Example login request:
+The application includes a secure **Admin Login System**.
+
+### Login Request
 
 ```json
 {
@@ -96,9 +134,13 @@ Example login request:
 }
 ```
 
-## API Endpoints
+After successful authentication, the admin can access the protected dashboard and manage all contact submissions.
 
-### Submit Contact Form
+---
+
+## 📡 API Endpoints
+
+### 📝 Submit Contact Form
 
 **POST** `/contact`
 
@@ -110,7 +152,7 @@ Example login request:
 }
 ```
 
-### Admin Login
+### 🔑 Admin Login
 
 **POST** `/login`
 
@@ -121,39 +163,68 @@ Example login request:
 }
 ```
 
-### Get All Contacts
+### 📋 Get All Contacts
 
 **GET** `/contacts`
 
-Returns all stored contact messages.
-
-## Pages
-
-- `/` – Contact Form
-- `/login.html` – Admin Login
-- `/admin.html` – Admin Dashboard
-
-## File Upload Support
-
-The application supports uploading:
-
-- Images (JPG, PNG, JPEG)
-- PDF files
-- Documents
-- Other supported file types
-
-## Deployment
-
-- Backend: Render
-- Database: MongoDB Atlas
-- Source Code: GitHub
-
-## Author
-
-**Jestin M K**
-
-GitHub: https://github.com/jestinkm
+Returns all stored contact messages from MongoDB.
 
 ---
 
-If you found this project useful, please consider giving it a ⭐ on GitHub.
+## 🖥️ Pages
+
+| Page | Description |
+|------|-------------|
+| `/` | Contact Form |
+| `/login.html` | Admin Login |
+| `/admin.html` | Protected Admin Dashboard |
+
+---
+
+## 📸 File Upload Support
+
+Supports uploading:
+
+- 🖼️ Images (JPG, PNG, JPEG)
+- 📄 PDF files
+- 📁 Documents
+- 🎥 Other supported file types
+
+---
+
+## 📊 Admin Dashboard
+
+The dashboard displays:
+
+- 👤 Name
+- 📧 Email
+- 💬 Message
+- 📎 Uploaded File
+- 🕒 Date & Time
+
+---
+
+## 🌐 Deployment
+
+- **Backend:** Render
+- **Database:** MongoDB Atlas
+- **Source Code:** GitHub
+
+---
+
+## 👨‍💻 Author
+
+**Jestin M K**
+
+- GitHub: https://github.com/jestinkm
+- LinkedIn: https://www.linkedin.com/
+
+---
+
+<div align="center">
+
+### ⭐ If you found this project useful, please give it a star on GitHub!
+
+<img src="https://readme-typing-svg.herokuapp.com?font=Fira+Code&weight=600&size=22&duration=2500&pause=1000&color=36BCF7&center=true&vCenter=true&width=600&lines=Thank+you+for+visiting!;Happy+Coding!+🚀;Built+with+Node.js+%2B+MongoDB"/>
+
+</div>
