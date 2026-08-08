@@ -4,6 +4,7 @@ const cors = require("cors");
 const dotenv = require("dotenv");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
+const nodemailer = require("nodemailer");
 const Contact = require("./models/Contact");
 
 dotenv.config();
@@ -23,6 +24,41 @@ mongoose
 const ADMIN_USERNAME = process.env.ADMIN_USERNAME || "admin";
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || "admin123";
 const JWT_SECRET = process.env.JWT_SECRET || "your-secret-key-change-in-production";
+
+// Email configuration
+const transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: process.env.EMAIL_USER,
+    pass: process.env.EMAIL_PASS
+  }
+});
+
+// Send email notification for new contact
+async function sendContactNotification(contact) {
+  try {
+    const mailOptions = {
+      from: process.env.EMAIL_USER,
+      to: process.env.ADMIN_EMAIL || process.env.EMAIL_USER,
+      subject: 'New Contact Form Submission',
+      html: `
+        <h2>New Contact Message Received</h2>
+        <p><strong>Name:</strong> ${contact.name}</p>
+        <p><strong>Email:</strong> ${contact.email}</p>
+        <p><strong>Message:</strong></p>
+        <p>${contact.message}</p>
+        <p><strong>Received:</strong> ${new Date(contact.createdAt).toLocaleString()}</p>
+        <hr>
+        <p><em>This is an automated notification from your contact form.</em></p>
+      `
+    };
+
+    await transporter.sendMail(mailOptions);
+    console.log('Email notification sent successfully');
+  } catch (error) {
+    console.error('Error sending email notification:', error);
+  }
+}
 
 // Middleware to verify JWT token
 const authenticateToken = (req, res, next) => {
@@ -69,6 +105,9 @@ app.post("/contact", async (req, res) => {
     });
 
     await contact.save();
+
+    // Send email notification
+    await sendContactNotification(contact);
 
     res.status(201).json({ message: "Message saved successfully!" });
   } catch (error) {
