@@ -21,6 +21,10 @@
     <div class="admin-header">
       <h2>Contact Messages</h2>
       <div class="admin-actions">
+        <div class="search-box">
+          <input type="text" id="searchInput" placeholder="Search messages..." onkeyup="filterContacts()">
+          <i class="fas fa-search"></i>
+        </div>
         <button class="refresh-btn" onclick="loadContacts()"><i class="fas fa-sync-alt"></i> Refresh</button>
         <button class="logout-btn" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</button>
       </div>
@@ -40,7 +44,37 @@
   </div>
 
   <footer>
-    <p>&copy; 2024 TechCorp Admin Panel. All rights reserved.</p>
+    <div class="footer-content">
+      <div class="footer-section">
+        <h3>TechCorp Admin</h3>
+        <p>Secure admin panel for managing contact messages.</p>
+        <div class="social-links">
+          <a href="#"><i class="fab fa-twitter"></i></a>
+          <a href="#"><i class="fab fa-linkedin"></i></a>
+          <a href="#"><i class="fab fa-facebook"></i></a>
+          <a href="#"><i class="fab fa-instagram"></i></a>
+        </div>
+      </div>
+      <div class="footer-section">
+        <h3>Quick Links</h3>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="index.html#about">About</a></li>
+          <li><a href="index.html#services">Services</a></li>
+          <li><a href="index.html#contact">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-section">
+        <h3>Admin</h3>
+        <ul>
+          <li><a href="admin.html">Dashboard</a></li>
+          <li><a href="#" onclick="logout()">Logout</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2024 TechCorp Admin Panel. All rights reserved.</p>
+    </div>
   </footer>
 
   <script>
@@ -107,6 +141,21 @@
   }
 
   loadContacts();
+
+  // Filter contacts based on search
+  function filterContacts() {
+    const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+    const rows = document.querySelectorAll('#contactTable tbody tr');
+    
+    rows.forEach(row => {
+      const text = row.textContent.toLowerCase();
+      if (text.includes(searchTerm)) {
+        row.style.display = '';
+      } else {
+        row.style.display = 'none';
+      }
+    });
+  }
   </script>
 
 </body>
