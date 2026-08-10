@@ -15,6 +15,7 @@
       <a href="#about">About</a>
       <a href="#services">Services</a>
       <a href="#testimonials">Testimonials</a>
+      <a href="#faq">FAQ</a>
       <a href="#contact">Contact</a>
       <a href="login.html">Login</a>
     </div>
@@ -175,6 +176,70 @@
     </div>
   </div>
 
+  <!-- FAQ Section -->
+  <div class="faq-section">
+    <div class="container faq-container">
+      <h2>Frequently Asked Questions</h2>
+      <p class="section-subtitle">Find answers to common questions about our services</p>
+      <div class="faq-grid">
+        <div class="faq-item">
+          <div class="faq-question">
+            <h3>What services do you offer?</h3>
+            <i class="fas fa-chevron-down"></i>
+          </div>
+          <div class="faq-answer">
+            <p>We offer a comprehensive range of technology services including web development, mobile applications, cloud solutions, cybersecurity, AI & machine learning, and data analytics. Our team specializes in creating custom solutions tailored to your business needs.</p>
+          </div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-question">
+            <h3>How long does a typical project take?</h3>
+            <i class="fas fa-chevron-down"></i>
+          </div>
+          <div class="faq-answer">
+            <p>Project timelines vary depending on complexity and scope. A simple website might take 2-4 weeks, while complex applications can take 3-6 months. We provide detailed timelines during our initial consultation and keep you updated throughout the development process.</p>
+          </div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-question">
+            <h3>What is your pricing structure?</h3>
+            <i class="fas fa-chevron-down"></i>
+          </div>
+          <div class="faq-answer">
+            <p>We offer flexible pricing models including fixed-price projects, hourly rates, and retainer agreements. After understanding your requirements, we provide a detailed quote with no hidden costs. We believe in transparent pricing and delivering value.</p>
+          </div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-question">
+            <h3>Do you provide ongoing support?</h3>
+            <i class="fas fa-chevron-down"></i>
+          </div>
+          <div class="faq-answer">
+            <p>Yes, we offer comprehensive maintenance and support packages. This includes regular updates, security patches, performance monitoring, and technical support. We ensure your systems remain secure and perform optimally long after launch.</p>
+          </div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-question">
+            <h3>How do you ensure project quality?</h3>
+            <i class="fas fa-chevron-down"></i>
+          </div>
+          <div class="faq-answer">
+            <p>We follow industry best practices and rigorous testing protocols. Our quality assurance process includes code reviews, automated testing, user acceptance testing, and performance optimization. We maintain high standards to deliver exceptional results.</p>
+          </div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-question">
+            <h3>Can you work with our existing team?</h3>
+            <i class="fas fa-chevron-down"></i>
+          </div>
+          <div class="faq-answer">
+            <p>Absolutely! We have extensive experience collaborating with in-house teams. We can integrate seamlessly with your existing workflows, provide expertise in specific areas, or handle entire projects while keeping you informed at every stage.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <div class="container" id="contact">
     <h2>Contact Us</h2>
 
@@ -203,6 +268,62 @@
     <p id="status"></p>
   </div>
 
+  <script>
+    // FAQ Accordion functionality
+    document.querySelectorAll('.faq-question').forEach(question => {
+      question.addEventListener('click', () => {
+        const faqItem = question.parentElement;
+        const answer = faqItem.querySelector('.faq-answer');
+        const icon = question.querySelector('i');
+        
+        // Close all other FAQ items
+        document.querySelectorAll('.faq-item').forEach(item => {
+          if (item !== faqItem) {
+            item.querySelector('.faq-answer').style.maxHeight = '0';
+            item.querySelector('.faq-answer').style.padding = '0';
+            item.querySelector('i').style.transform = 'rotate(0deg)';
+          }
+        });
+        
+        // Toggle current FAQ item
+        if (answer.style.maxHeight && answer.style.maxHeight !== '0px') {
+          answer.style.maxHeight = '0';
+          answer.style.padding = '0';
+          icon.style.transform = 'rotate(0deg)';
+        } else {
+          answer.style.maxHeight = answer.scrollHeight + 'px';
+          answer.style.padding = '20px 0';
+          icon.style.transform = 'rotate(180deg)';
+        }
+      });
+    });
+
+    // Contact form functionality
+    document.getElementById("contactForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const data = {
+        name: document.getElementById("name").value,
+        email: document.getElementById("email").value,
+        message: document.getElementById("message").value,
+      };
+
+      const res = await fetch("/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+
+      const result = await res.json();
+      const statusEl = document.getElementById("status");
+      statusEl.innerText = result.message;
+      statusEl.className = res.ok ? "success" : "error";
+      document.getElementById("contactForm").reset();
+    });
+  </script>
+
   <footer>
     <div class="footer-content">
       <div class="footer-section">
@@ -221,6 +342,7 @@
           <li><a href="#about">About Us</a></li>
           <li><a href="#services">Services</a></li>
           <li><a href="#testimonials">Testimonials</a></li>
+          <li><a href="#faq">FAQ</a></li>
           <li><a href="#contact">Contact</a></li>
         </ul>
       </div>
@@ -247,32 +369,6 @@
       <p>&copy; 2024 TechCorp. All rights reserved.</p>
     </div>
   </footer>
-
-  <script>
-    document.getElementById("contactForm").addEventListener("submit", async (e) => {
-      e.preventDefault();
-
-      const data = {
-        name: document.getElementById("name").value,
-        email: document.getElementById("email").value,
-        message: document.getElementById("message").value,
-      };
-
-      const res = await fetch("/contact", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      });
-
-      const result = await res.json();
-      const statusEl = document.getElementById("status");
-      statusEl.innerText = result.message;
-      statusEl.className = res.ok ? "success" : "error";
-      document.getElementById("contactForm").reset();
-    });
-  </script>
 
 </body>
 </html>
